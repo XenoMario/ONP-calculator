@@ -1,3 +1,4 @@
+#include "Stack.inl"
 #include <iostream>
 #include <vector>
 #include <stack>
@@ -11,7 +12,15 @@ double solve(std::string& str);
 
 int main()
 {
-    using std::cout;
+    Stack<int> stos;
+
+    stos.push(1);
+    stos.push(2);
+    stos.push(3);
+    stos.push(4);
+    stos.push(5);
+
+    /*using std::cout;
     using std::endl;
 
     std::vector<std::string> vec(4);
@@ -30,7 +39,7 @@ int main()
         cout << result << endl;
     }
 
-    cout << "Goodbye" << endl;
+    cout << "Goodbye" << endl;*/
     return 0;
 }
 
@@ -50,7 +59,7 @@ int priority(char ch)
 std::string convert(std::string& str)
 {
     std::string eq = str;
-    std::string output;
+    std::string output; // Kolejka string / struktura(char,double)
     std::stack<char> st;
     std::cout << "Enter expression" << std::endl;
     //std::cin>>eq;
@@ -65,7 +74,7 @@ std::string convert(std::string& str)
         if (ch == ' ')
             continue;
 
-        if (((int)ch >= 40 && (int)ch <= 47 && (int)ch != 46) || (int)ch == 94 || (int)ch == 37)
+        if (((int)ch >= 40 && (int)ch <= 47 && (int)ch != 46) || (int)ch == 94 || (int)ch == 37) // Zmiana na znaki
         {
             if (ch == ')')
             {
