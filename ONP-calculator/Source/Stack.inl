@@ -16,6 +16,8 @@ inline void Stack<T>::push(const T& en)
 		top->next = bufor;
 		top = bufor;
 	}
+
+	size++;
 }
 
 template<typename T>
@@ -28,6 +30,8 @@ inline T Stack<T>::pop()
 	top = top->prior;
 	top->next = nullptr;
 	delete temp;
+
+	size--;
 
 	return val;
 }
