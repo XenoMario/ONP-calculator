@@ -22,7 +22,7 @@ template<typename T>
 inline T Stack<T>::pop()
 {
 	T val;
-	val = this->value;
+	val = top->value;
 	
 	Element* temp = top;
 	top = top->prior;

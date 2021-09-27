@@ -12,6 +12,8 @@ double solve(std::string& str);
 
 int main()
 {
+    std::cout << "halo" << std::endl;
+
     Stack<int> stos;
 
     stos.push(1);
