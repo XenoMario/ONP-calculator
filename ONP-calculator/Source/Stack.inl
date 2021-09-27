@@ -21,7 +21,13 @@ inline void Stack<T>::push(const T& en)
 template<typename T>
 inline T Stack<T>::pop()
 {
+	T val;
+	val = this->value;
+	
+	Element* temp = top;
+	top = top->prior;
+	top->next = nullptr;
+	delete temp;
 
-
-	return T();
+	return val;
 }
