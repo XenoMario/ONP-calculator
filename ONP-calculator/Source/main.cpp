@@ -1,30 +1,15 @@
-#include "Stack.inl"
-#include <iostream>
-#include <vector>
-#include <stack>
+#include <iomanip>
+#include <cstdlib>
 #include <string>
+#include <vector>
+#include "Stack.inl"
 
 int priority(char ch);
-
-std::string convert(std::string& s);
-
-double solve(std::string& str);
+List convert(const std::string& st);
+double solution(List&);
 
 int main()
 {
-    std::cout << "halo" << std::endl;
-
-    Stack<int> stos;
-
-    stos.push(1);
-    stos.push(2);
-    stos.push(3);
-    stos.push(4);
-    stos.push(5);
-
-    /*using std::cout;
-    using std::endl;
-
     std::vector<std::string> vec(4);
 
     vec[0] = { "3+4*2/(1-5)^2" };
@@ -32,16 +17,17 @@ int main()
     vec[2] = { "(1+2)*4+5-3" };
     vec[3] = { "12+2*(3*4+10/5)" };
 
-    std::string trial;
+    List trial;
 
     for (size_t i = 0; i < vec.size(); i++)
     {
         trial = convert(vec[i]);
-        double result = solve(trial);
+        //trial.Show();
+        double result = solution(trial);
         cout << result << endl;
     }
 
-    cout << "Goodbye" << endl;*/
+    std::cout << "Goodbye" << std::endl;
     return 0;
 }
 
@@ -58,13 +44,10 @@ int priority(char ch)
     else return 4;
 }
 
-std::string convert(std::string& str)
+List convert(const std::string& eq)
 {
-    std::string eq = str;
-    std::string output; // Kolejka string / struktura(char,double)
-    std::stack<char> st;
-    std::cout << "Enter expression" << std::endl;
-    //std::cin>>eq;
+    List output;
+    Stack<char> st;
     size_t s = eq.size();
 
     for (size_t i = 0; i < s; i++)
@@ -76,23 +59,22 @@ std::string convert(std::string& str)
         if (ch == ' ')
             continue;
 
-        if (((int)ch >= 40 && (int)ch <= 47 && (int)ch != 46) || (int)ch == 94 || (int)ch == 37) // Zmiana na znaki
+        if (((int)ch >= 40 && (int)ch <= 47 && (int)ch != 46) || (int)ch == 94 || (int)ch == 37)
         {
             if (ch == ')')
             {
-                char cc = st.top();
+                char cc = st.Top();
                 while (cc != '(')
                 {
-                    output += cc;
-                    output += ';';
+                    output.push_back(cc);
                     st.pop();
-                    cc = st.top();
+                    cc = st.Top();
                 }
                 st.pop();
                 continue;
             }
 
-            if (!st.empty())
+            if (!st.isempty())
             {
                 if (ch == '(')
                 {
@@ -100,14 +82,13 @@ std::string convert(std::string& str)
                     continue;
                 }
 
-                char c = st.top();
+                char c = st.Top();
                 while ((priority(ch) <= priority(c)))
                 {
-                    output += st.top();
-                    output += ';';
+                    output.push_back(st.Top());
                     st.pop();
-                    if (!st.empty())
-                        c = st.top();
+                    if (!st.isempty())
+                        c = st.Top();
                     else break;
                 }
 
@@ -121,106 +102,96 @@ std::string convert(std::string& str)
         }
         else
         {
-            int t = i;
+            std::string temp;
             while ((int)ch >= 48 && (int)ch <= 57)
             {
-                output += ch;
-                t++;
-                ch = eq[t];
+                temp += ch;
+                i++;
+                ch = eq[i];
             }
-            t--;
-            i = t;
-            output += ';';
+            i--;
+            double num = std::stod(temp);
+            output.push_back(num);
         }
 
-        /*cout<<endl;
-        for(size_t j=0; j<output.size(); j++)
-            cout<<output[j]<<" ";
-        cout<<endl;
-
-        for (std::stack<char> dump = st; !dump.empty(); dump.pop())
-            std::cout << dump.top() << " ";
+        /*cout<<"List: "<<endl;
+        output.Show();
+        cout<<"Stack: "<<endl;
+        Stack<char> dump;
+        for (dump = st; !dump.isempty(); dump.pop())
+            std::cout << dump.Top() << " ";
         cout<<endl;*/
     }
 
-    while (!st.empty())
+    while (!st.isempty())
     {
-        output += st.top();
-        if (st.size() > 1) output += ';';
+        output.push_back(st.Top());
         st.pop();
     }
-
-    /*cout<<endl;
-    for(size_t i=0; i<output.size(); i++)
-        cout<<output[i]<<" ";
-    cout<<endl;*/
 
     return output;
 }
 
-double solve(std::string& str)
+double solution(List& ls)
 {
-    std::stack<double> stc;
-
-    size_t length = str.length();
-
-    for (size_t i = 0; i < length; i++)
+    Stack<double> stc;
+    while (!ls.isempty())
     {
-        if ((int)str[i] >= 48 && (int)str[i] <= 57)
+        if (ls.first_is_number())
         {
-            std::string temp;
-
-            while (str[i] != ';')
-            {
-                temp += str[i];
-                i++;
-            }
-
-            stc.push(std::stod(temp));
+            double num = ls.pop_front<double>();
+            stc.push(num);
         }
         else
         {
-            if (str[i] == '+')
+            char mark = ls.pop_front<char>();
+            if (mark == '+')
             {
-                double y = stc.top();
+                double y = stc.Top();
                 stc.pop();
-                double x = stc.top();
+                double x = stc.Top();
                 stc.pop();
 
                 stc.push(x + y);
             }
-            else if (str[i] == '-')
+            else if (mark == '-')
             {
-                double y = stc.top();
+                double y = stc.Top();
                 stc.pop();
-                double x = stc.top();
+                double x = stc.Top();
                 stc.pop();
 
                 stc.push(x - y);
             }
-            else if (str[i] == '*')
+            else if (mark == '*')
             {
-                double y = stc.top();
+                double y = stc.Top();
                 stc.pop();
-                double x = stc.top();
+                double x = stc.Top();
                 stc.pop();
 
                 stc.push(x * y);
             }
-            else if (str[i] == '/')
+            else if (mark == '/')
             {
-                double y = stc.top();
+                double y = stc.Top();
                 stc.pop();
-                double x = stc.top();
+                double x = stc.Top();
                 stc.pop();
 
-                stc.push(x / y);
+                if (y != 0)
+                    stc.push(x / y);
+                else
+                {
+                    std::cerr << "You can't divide by 0" << endl;
+                    std::exit(EXIT_FAILURE);
+                }
             }
-            else if (str[i] == '^')
+            else if (mark == '^')
             {
-                double y = stc.top();
+                double y = stc.Top();
                 stc.pop();
-                double x = stc.top();
+                double x = stc.Top();
                 stc.pop();
 
                 double z = 1;
@@ -229,14 +200,9 @@ double solve(std::string& str)
 
                 stc.push(z);
             }
-            i++;
         }
-
-        /*std::cout<<std::endl;
-        for (std::stack<double> dump = stc; !dump.empty(); dump.pop())
-            std::cout << dump.top() << " ";
-        std::cout<<std::endl;*/
     }
 
-    return stc.top();
+    return stc.Top();
 }
+
