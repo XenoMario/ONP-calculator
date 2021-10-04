@@ -3,21 +3,83 @@
 #include <string>
 #include <vector>
 #include "Stack.inl"
+#include "List.h"
+
+// to do:
+// Przerobic liste (Struktura osobno przedstawiona jako T)
+// Operator przenoszacy
+// Interface uzytkownika
+// Klasa aplikacja 
+// Google test (Github) - test jednostkowe
+
+struct ONP_unit
+{
+    double number;
+    char sign;
+    bool nors;
+
+    ONP_unit() = default;
+
+    ONP_unit(const char& ch)
+    {
+        number = 0;
+        sign = ch;
+        nors = 0;
+    }
+
+    ONP_unit(const double& num)
+    {
+        number = num;
+        sign = '.';
+        nors = 1;
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, const ONP_unit& un);
+
+    template<typename T>
+    ONP_unit& operator=(const T& x)
+    {
+        if (typeid(x) == typeid(char))
+        {
+            sign = x;
+            number = 0;
+            nors = 0;
+        }
+        else
+        {
+            sign = '.';
+            number = x;
+            nors = 1;
+        }
+
+        return *this;
+    }
+};
+
+std::ostream& operator<<(std::ostream& os, const ONP_unit& un)
+{
+    if (un.nors == 1)
+        os << un.number;
+    else
+        os << un.sign;
+
+    return os;
+}
 
 int priority(char ch);
-List convert(const std::string& st);
-double solution(List&);
+Queue<ONP_unit> convert(const std::string& st);
+double solution(Queue<ONP_unit>&);
 
 int main()
 {
-    std::vector<std::string> vec(4);
 
-    vec[0] = { "3+4*2/(1-5)^2" };
-    vec[1] = { "7+1*(2*3+4/5)" };
-    vec[2] = { "(1+2)*4+5-3" };
-    vec[3] = { "12+2*(3*4+10/5)" };
+    std::vector<std::string> vec;
+    vec.push_back("3+4*2/(1-5)^2");
+    vec.push_back("7+1*(2*3+4/5)");
+    vec.push_back("(1+2)*4+5-3" );
+    vec.push_back("12+2*(3*4+10/5)" );
 
-    List trial;
+    Queue<ONP_unit> trial;
 
     for (size_t i = 0; i < vec.size(); i++)
     {
@@ -26,7 +88,7 @@ int main()
         double result = solution(trial);
         cout << result << endl;
     }
-
+    
     std::cout << "Goodbye" << std::endl;
     return 0;
 }
@@ -44,9 +106,10 @@ int priority(char ch)
     else return 4;
 }
 
-List convert(const std::string& eq)
+
+Queue<ONP_unit> convert(const std::string& eq)
 {
-    List output;
+    Queue<ONP_unit> output;
     Stack<char> st;
     size_t s = eq.size();
 
@@ -66,7 +129,8 @@ List convert(const std::string& eq)
                 char cc = st.Top();
                 while (cc != '(')
                 {
-                    output.push_back(cc);
+                    ONP_unit un = cc;
+                    output.push_back(un);
                     st.pop();
                     cc = st.Top();
                 }
@@ -85,6 +149,7 @@ List convert(const std::string& eq)
                 char c = st.Top();
                 while ((priority(ch) <= priority(c)))
                 {
+                    ONP_unit un = c;
                     output.push_back(st.Top());
                     st.pop();
                     if (!st.isempty())
@@ -110,11 +175,11 @@ List convert(const std::string& eq)
                 ch = eq[i];
             }
             i--;
-            double num = std::stod(temp);
-            output.push_back(num);
+            ONP_unit u = std::stod(temp);
+            output.push_back(u);
         }
 
-        /*cout<<"List: "<<endl;
+        /*cout << "List: " << endl;
         output.Show();
         cout<<"Stack: "<<endl;
         Stack<char> dump;
@@ -132,19 +197,20 @@ List convert(const std::string& eq)
     return output;
 }
 
-double solution(List& ls)
+double solution(Queue<ONP_unit>& ls)
 {
     Stack<double> stc;
     while (!ls.isempty())
     {
-        if (ls.first_is_number())
+        ONP_unit unt = ls.pop_front();
+
+        if (unt.nors==1)
         {
-            double num = ls.pop_front<double>();
-            stc.push(num);
+            stc.push(unt.number);
         }
         else
         {
-            char mark = ls.pop_front<char>();
+            char mark = unt.sign;
             if (mark == '+')
             {
                 double y = stc.Top();
@@ -206,3 +272,6 @@ double solution(List& ls)
     return stc.Top();
 }
 
+
+
+// operator przenoszacy i konstruktor przenoszacy
