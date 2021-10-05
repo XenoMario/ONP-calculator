@@ -1,12 +1,11 @@
 #include "Application.h"
 
-//#include <string>
-
 // to do:
 // Przerobic liste (Struktura osobno przedstawiona jako T) +
-// Operator przenoszacy i konstruktor przenoszacy 
 // Interface uzytkownika + 
 // Klasa aplikacja +
+// Operator przenoszacy i konstruktor przenoszacy 
+// Dodaæ plik readme
 // Google test (Github) - test jednostkowe
 
 // Zapytaæ o przestrzenie nazw

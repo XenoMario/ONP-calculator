@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Queue.h"
+#include "Queue.inl"
 #include "Stack.inl"
 
 struct ONP_unit;
