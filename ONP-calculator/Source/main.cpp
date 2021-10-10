@@ -1,10 +1,11 @@
 #include "Application.h"
+//#include <gtest/gtest.h>
 
 // to do:
 // Przerobic liste (Struktura osobno przedstawiona jako T) +
 // Interface uzytkownika + 
 // Klasa aplikacja +
-// Operator przenoszacy i konstruktor przenoszacy 
+// Operator przenoszacy i konstruktor przenoszacy +
 // Dodaæ plik readme
 // Google test (Github) - test jednostkowe
 
@@ -13,7 +14,7 @@
 
 int main()
 {
-
+	//testing::InitGoogleTest()
     Application app;
 	double result;
 

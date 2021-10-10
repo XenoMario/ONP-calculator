@@ -1,0 +1,6 @@
+﻿  main.cpp
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny "public: static class testing::UnitTest * __cdecl testing::UnitTest::GetInstance(void)" (?GetInstance@UnitTest@testing@@SAPAV12@XZ) przywołany w funkcji "int __cdecl RUN_ALL_TESTS(void)" (?RUN_ALL_TESTS@@YAHXZ)
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny "public: int __thiscall testing::UnitTest::Run(void)" (?Run@UnitTest@testing@@QAEHXZ) przywołany w funkcji "int __cdecl RUN_ALL_TESTS(void)" (?RUN_ALL_TESTS@@YAHXZ)
+main.obj : error LNK2019: nierozpoznany symbol zewnętrzny "void __cdecl testing::InitGoogleTest(int *,char * *)" (?InitGoogleTest@testing@@YAXPAHPAPAD@Z) przywołany w funkcji _main
+C:\Users\User\source\repos\ONP-calculator\Libraries\lib\gtest.lib : warning LNK4272: wystąpił konflikt typu maszyny biblioteki „x64” z typem maszyny docelowej „x86”
+C:\Users\User\source\repos\ONP-calculator\Debug\Tests.exe : fatal error LNK1120: liczba nierozpoznanych elementów zewnętrznych: 3
