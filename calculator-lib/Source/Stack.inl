@@ -116,4 +116,15 @@ Stack<T>::~Stack<T>()
     }
 }
 
-
+template<typename T>
+void Stack<T>::clean()
+{
+    Element* temp;
+    while (top != nullptr)
+    {
+        temp = top;
+        top = top->prior;
+        delete temp;
+    }
+    top = nullptr;
+}

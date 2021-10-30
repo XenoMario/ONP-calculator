@@ -1,7 +1,7 @@
-#include "Application.h"
+#include "Calculator.h"
 //#include <gtest/gtest.h>
 
-// to do:
+// 10.10.2021
 // Przerobic liste (Struktura osobno przedstawiona jako T) +
 // Interface uzytkownika + 
 // Klasa aplikacja +
@@ -12,16 +12,22 @@
 // Zapytaæ o przestrzenie nazw
 // Powtorzyc F10 i F11
 
+// 17.10.2021
+// -----------
+// Stowrzyc funkcje pierwiastka, sinusy, cosinusy na zasadzie ONP
+// TEST!!!
+
+
 int main()
 {
 	//testing::InitGoogleTest()
-    Application app;
+    Calculator app;
 	double result;
 
 	for (;;)
 	{
-		app.take();
-		result = app.solution();
+		//app.take();
+		result = app.solution("3+4*2/(1-5)^2");
 		cout << "solution: " << result << endl;
 		cout << "Do you want to solve another equation? (y/n)" << endl;
 

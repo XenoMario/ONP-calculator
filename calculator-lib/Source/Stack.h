@@ -25,6 +25,7 @@ public:
     Stack& operator=(const Stack&);
 
     bool isempty() const { return size == 0 ? 1 : 0; }
+    void clean();
 
     void Show() const;
     void Adresses() const;

@@ -1,2 +1,3 @@
-﻿  Application.cpp
+﻿  Calculator.cpp
+C:\Users\User\source\repos\ONP-calculator\calculator-lib\Source\Stack.inl(83): warning C4715: "Stack<char>::operator=”: niewszystkie ścieżki kodu zwracają wartość
   calculator-lib.vcxproj -> C:\Users\User\source\repos\ONP-calculator\x64\Debug\calculator-lib.lib

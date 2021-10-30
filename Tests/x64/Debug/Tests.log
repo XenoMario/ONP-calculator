@@ -1,2 +1,5 @@
-﻿  stack-tests.cpp
+﻿  Calculator-tests.cpp
+  stack-tests.cpp
+  Generowanie kodu...
+gtestd.lib(gtest-all.obj) : warning LNK4099: nie znaleziono pliku PDB "gtestd.pdb" z elementem "gtestd.lib(gtest-all.obj)" lub w pozycji "C:\Users\User\source\repos\ONP-calculator\x64\Debug\gtestd.pdb"; obiekt zostanie skonsolidowany bez informacji debugowania
   Tests.vcxproj -> C:\Users\User\source\repos\ONP-calculator\x64\Debug\Tests.exe
